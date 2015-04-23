@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemadesigner version="6.5">
+<source>
+<database charset="latin1" collation="latin1_swedish_ci">dbfedepesas</database>
+</source>
+<canvas zoom="100">
+<tables>
+<table name="evento" view="colnames">
+<left>503</left>
+<top>319</top>
+<width>165</width>
+<height>299</height>
+<sql_create_table>CREATE TABLE `evento` (
+  `codigo` varchar(10) NOT NULL,
+  `fechaEvento` date NOT NULL,
+  `codDepartamneto` varchar(10) NOT NULL,
+  `codCiudad` varchar(10) NOT NULL,
+  `direccionVeriDefi` varchar(250) DEFAULT NULL,
+  `direccionCompe` varchar(250) DEFAULT NULL,
+  `direccionEntrena` varchar(250) DEFAULT NULL,
+  `condFinancieras` varchar(250) DEFAULT NULL,
+  `alojaTransporte` varchar(250) DEFAULT NULL,
+  `mediosAcreditacion` varchar(250) DEFAULT NULL,
+  `formInscripcionPre` varchar(250) DEFAULT 'Podria ser el codigo del archivo pdf o una plantilla html',
+  `formInscripcionFinal` varchar(250) DEFAULT 'Podria ser el codigo del archivo pdf o una plantilla html',
+  `nota` varchar(250) DEFAULT NULL,
+  PRIMARY KEY (`codigo`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="JuecesEvento" view="colnames">
+<left>313</left>
+<top>402</top>
+<width>138</width>
+<height>129</height>
+<sql_create_table>CREATE TABLE `juecesevento` (
+  `codJuez` varchar(10) NOT NULL,
+  `codEvento` varchar(10) NOT NULL,
+  PRIMARY KEY (`codJuez`,`codEvento`),
+  KEY `FK_JuecesEvento` (`codEvento`),
+  CONSTRAINT `FK_JuecesEvento` FOREIGN KEY (`codEvento`) REFERENCES `evento` (`codigo`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_JuecesEventoJueces` FOREIGN KEY (`codJuez`) REFERENCES `jueces` (`codigo`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="Jueces" view="colnames">
+<left>173</left>
+<top>399</top>
+<width>112</width>
+<height>129</height>
+<sql_create_table>CREATE TABLE `jueces` (
+  `codigo` varchar(10) NOT NULL,
+  `codPersona` varchar(10) NOT NULL,
+  `codTipo` varchar(10) NOT NULL,
+  PRIMARY KEY (`codigo`),
+  KEY `FK_JuecesTipoJuz` (`codTipo`),
+  CONSTRAINT `FK_JuecesTipoJuz` FOREIGN KEY (`codTipo`) REFERENCES `tipojuez` (`codigo`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="TipoJuez" view="colnames">
+<left>18</left>
+<top>398</top>
+<width>124</width>
+<height>129</height>
+<sql_create_table>CREATE TABLE `tipojuez` (
+  `codigo` varchar(10) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `nomenclatura` varchar(5) NOT NULL,
+  PRIMARY KEY (`codigo`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="Participantes" view="colnames">
+<left>752</left>
+<top>410</top>
+<width>134</width>
+<height>129</height>
+<sql_create_table>CREATE TABLE `participantes` (
+  `codRama` varchar(10) NOT NULL,
+  `codAtleta` varchar(10) NOT NULL,
+  `codEvento` varchar(10) NOT NULL,
+  PRIMARY KEY (`codRama`,`codAtleta`,`codEvento`),
+  KEY `FK_ParticipantesEventos` (`codEvento`),
+  KEY `FK_ParticipantesAtletas` (`codAtleta`),
+  CONSTRAINT `FK_ParticipantesAtletas` FOREIGN KEY (`codAtleta`) REFERENCES `atleta` (`codPersona`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_ParticipantesEventos` FOREIGN KEY (`codEvento`) REFERENCES `evento` (`codigo`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_ParticipantesRama` FOREIGN KEY (`codRama`) REFERENCES `rama` (`codigo`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="Rama" view="colnames">
+<left>965</left>
+<top>389</top>
+<width>90</width>
+<height>112</height>
+<sql_create_table>CREATE TABLE `rama` (
+  `codigo` varchar(10) NOT NULL,
+  `nombre` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`codigo`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="Atleta" view="colnames">
+<left>602</left>
+<top>126</top>
+<width>129</width>
+<height>163</height>
+<sql_create_table>CREATE TABLE `atleta` (
+  `codPersona` varchar(10) NOT NULL,
+  `peso` int(3) DEFAULT NULL,
+  `codCategoria` varchar(10) DEFAULT NULL,
+  `codEntrenador` varchar(10) DEFAULT NULL,
+  `codLiga` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`codPersona`),
+  KEY `FK_AtletaLiga` (`codLiga`),
+  KEY `FK_AtletaCategoria` (`codCategoria`),
+  KEY `FK_AtletaEntrenador` (`codEntrenador`),
+  CONSTRAINT `FK_AtletaCategoria` FOREIGN KEY (`codCategoria`) REFERENCES `categoria` (`codigo`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_AtletaEntrenador` FOREIGN KEY (`codEntrenador`) REFERENCES `entrenador` (`codPersona`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_AtletaLiga` FOREIGN KEY (`codLiga`) REFERENCES `liga` (`codigo`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_AtletaPersona` FOREIGN KEY (`codPersona`) REFERENCES `persona` (`codigo`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="Liga" view="colnames">
+<left>467</left>
+<top>-3</top>
+<width>112</width>
+<height>146</height>
+<sql_create_table>CREATE TABLE `liga` (
+  `codigo` varchar(10) NOT NULL,
+  `nombre` varchar(50) DEFAULT NULL,
+  `abreviatura` varchar(5) DEFAULT NULL,
+  `descripcion` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`codigo`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="Categoria" view="colnames">
+<left>807</left>
+<top>30</top>
+<width>120</width>
+<height>163</height>
+<sql_create_table>CREATE TABLE `categoria` (
+  `codigo` varchar(10) NOT NULL,
+  `nombre` varchar(50) DEFAULT NULL,
+  `peso` int(3) DEFAULT NULL,
+  `codRama` varchar(10) DEFAULT NULL,
+  `codTipo` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`codigo`),
+  KEY `FK_CategoriaTipoCategoria` (`codTipo`),
+  KEY `FK_CategoriaRama` (`codRama`),
+  CONSTRAINT `FK_CategoriaRama` FOREIGN KEY (`codRama`) REFERENCES `rama` (`codigo`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_CategoriaTipoCategoria` FOREIGN KEY (`codTipo`) REFERENCES `tipocategoria` (`codigo`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="TipoCategoria" view="colnames">
+<left>988</left>
+<top>26</top>
+<width>90</width>
+<height>112</height>
+<sql_create_table>CREATE TABLE `tipocategoria` (
+  `codigo` varchar(10) NOT NULL,
+  `nombre` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`codigo`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="Entrenador" view="colnames">
+<left>379</left>
+<top>188</top>
+<width>112</width>
+<height>95</height>
+<sql_create_table>CREATE TABLE `entrenador` (
+  `codPersona` varchar(10) NOT NULL,
+  PRIMARY KEY (`codPersona`),
+  CONSTRAINT `FK_EntrenadorPersona` FOREIGN KEY (`codPersona`) REFERENCES `persona` (`codigo`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="Persona" view="colnames">
+<left>166</left>
+<top>50</top>
+<width>140</width>
+<height>185</height>
+<sql_create_table>CREATE TABLE `persona` (
+  `codigo` varchar(10) NOT NULL,
+  `nombre1` varchar(40) DEFAULT NULL,
+  `nombre2` varchar(40) DEFAULT NULL,
+  `apellido1` varchar(40) DEFAULT NULL,
+  `apellido2` varchar(40) DEFAULT NULL,
+  `fechaNacimiento` date DEFAULT NULL,
+  `genero` varchar(2) DEFAULT NULL,
+  PRIMARY KEY (`codigo`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="inscripcion" view="colnames">
+<left>798</left>
+<top>216</top>
+<width>134</width>
+<height>146</height>
+<sql_create_table>CREATE TABLE `inscripcion` (
+  `codigo` varchar(10) NOT NULL,
+  `codAtleta` varchar(10) DEFAULT NULL,
+  `tipo` varchar(5) DEFAULT NULL,
+  `sorteo` int(11) DEFAULT NULL,
+  `codEvento` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`codigo`),
+  KEY `FK_inscripcionAtletas` (`codAtleta`),
+  KEY `FK_inscripcionEventos` (`codEvento`),
+  CONSTRAINT `FK_inscripcionAtletas` FOREIGN KEY (`codAtleta`) REFERENCES `atleta` (`codPersona`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_inscripcionEventos` FOREIGN KEY (`codEvento`) REFERENCES `evento` (`codigo`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+</tables>
+</canvas>
+</schemadesigner>

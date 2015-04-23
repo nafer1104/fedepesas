@@ -1,0 +1,101 @@
+@charset "utf-8";
+/* CSS Document */
+body{
+	background-color:#E6E6E6;
+	}
+#principal{
+	min-height:580px;
+	min-width:800px;
+	background-color:#E6E6E6;
+	}
+#cabecera{
+	height:50px;
+	max-width:800px;
+	background-color:#000;
+	border-bottom:solid #FF8000 4px;
+	border-radius: 15px 15px 0px 0px;
+	}
+#cuerpo{
+	min-height:480px;
+	max-width:800px;
+	background-color:#FFF;
+	}
+#pie{
+	height:50px;
+	max-width:800px;
+	background-color:#000;
+	border-radius: 0px 0px 15px 15px;
+	border-top: solid #FF8000 2px;
+	color:#999;
+	}
+#capa_menu{
+	width:250px;
+	background-color:#F2F2F2;
+	border-radius: 10px 10px 10px 10px;
+	border:dotted #979797 1px;
+	}
+#capa_menu:hover{
+	background-color:#FED;
+	border:dotted #F60 1px;
+	}
+#capa_menu:hover img{
+	transform : rotate(-45deg) scale(.9);
+	-moz-transform : rotate(-45deg) scale(.9); /* Firefox */
+	-webkit-transform : rotate(-45deg) scale(.9); /* Chrome - Safari */
+	-o-transform : rotate(-45deg) scale(.9); /* Opera */
+	}
+#capa_form{
+	min-width:250px;
+	max-width:500px;
+	background-color:#F2F2F2;
+	border-radius: 10px 10px 10px 10px;
+	border:dotted #CCC 1px;
+	background-image:url(plantillas/fondo_form.png);
+	background-repeat:repeat;
+	}
+.fuente{
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:11px;
+	}
+.campo{
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:12px;
+	padding: 5px;
+	border: solid #CCC 1px;
+	border-radius: 15px;
+	}
+.campo:focus{
+	outline:none;
+	border: solid #F60 1px;
+	}
+.button
+		{
+			font-family:Verdana, Geneva, sans-serif;
+			padding:5px;
+			display: inline-block;
+			text-decoration: none;
+			cursor: pointer;
+			border-radius: 10px;
+			background:#F90;
+			color: #000 !important;
+			font-weight: 700;
+			font-size:10px;
+			outline: 0;
+			width:100px;
+		}
+.button:hover
+	{
+		background: #C30;
+		color: #FFF !important;
+	}
+#rueda{
+	transition: 0.5s ease;
+ 	-moz-transition: 0.5s ease; /* Firefox */
+ 	-webkit-transition: 0.5s ease; /* Chrome - Safari */
+ 	-o-transition: 0.5s ease; /* Opera */
+}
+#titulo{
+	background-color:#FFD8B0;
+	height:20px;
+	border-radius: 10px 10px 0px 0px;
+	}
